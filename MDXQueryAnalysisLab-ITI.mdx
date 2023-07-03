@@ -1,0 +1,59 @@
+-- (1) Write DMX to Dispaly Sales QTY Measure.
+SELECT [Measures].[Qty] on columns
+from [Sales 1]
+
+
+-- (2) Write DMX to Dispaly Sales Qty and Qty Total price Measures.
+SELECT {[Measures].[Qty], [Measures].[Qty Total Price]} on columns
+from [Sales 1]
+
+-- (3) Write DMX to Dispaly all Measures in Sales Cube
+SELECT [Measures].allmembers on columns
+from [Sales 1]
+
+-- (4) Write DMX to Display Qty per Customer with the Total Qty
+SELECT [Measures].[Qty] on columns
+      ,[Customer Dim].[Customer Name].allmembers on rows
+from [Sales 1]
+
+-- (5) Write DMX to Display Qty per Customer without the Total Qty
+SELECT [Measures].[Qty] on columns
+      ,[Customer Dim].[Customer ID].[Customer ID].allmembers on rows
+from [Sales 1]
+
+-- (6) Write DMX to Display Qty and Number of orders per Customer in (2007)
+SELECT {[Measures].[Qty],[Measures].[Fact Sales Count] } on columns
+	  ,[Customer Dim].[Customer ID].allmembers on rows
+from [Sales 1]
+where [Time Dim 1].[Calendar Year].[2007]
+
+-- (7) Write DMX to Display Qty per year for Customer1
+SELECT [Measures].[Qty] on columns
+	  ,[Time Dim 1].[Calendar Year].allmembers on rows
+from [Sales 1]
+where [Customer Dim].[Customer Name].&[Customer1]
+
+-- (8) Write DMX to Display Qty per customer for each product
+SELECT [Measures].[Qty] on columns
+	  ,{([Customer Dim].[Customer Name].allmembers)*([Product Dim 1].[Product Name].allmembers)} on rows
+from [Sales 1]
+
+-- (9)	Write DMX to Display Qty per customer for each product in each year
+SELECT {[Measures].[Qty]*[Time Dim 1].[Calendar Year].allmembers} on columns
+	  ,{([Customer Dim].[Customer Name].allmembers)*([Product Dim 1].[Product Name].allmembers)} on rows
+from [Sales 1]
+
+-- (10) Write DMX to Display Qty of products which customer1 bought form product1 in 2007
+SELECT [Measures].[Qty] on columns
+from [Sales 1]
+where ([Customer Dim].[Customer Name].&[Customer1],[Time Dim 1].[Calendar Year].&[2007],[Product Dim 1].[Product ID].&[1])
+
+-- (11) Display number of Customers Who deals with Egypt Channel 
+select [Measures].[Fact Sales Count] on columns
+from [Sales 1]
+where [Channel Dim].[Country].&[Egypt]
+
+-- (12) 
+SELECT {[Measures].[Qty]*[Time Dim 1].[Calendar Year].allmembers} on columns
+	  ,[Channel Dim].[Channal ID].allmembers on rows
+from [Sales 1]

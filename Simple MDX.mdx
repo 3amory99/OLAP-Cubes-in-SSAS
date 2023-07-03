@@ -1,0 +1,16 @@
+SELECT [Measures].[Qty] on columns
+from [Sales 1]
+
+SELECT [Measures].[Qty] on columns
+	  ,[Product Dim 1].[Product Name].allmembers on rows
+from [Sales 1]
+
+SELECT [Measures].[Qty] on columns
+	  ,[Product Dim 1].[Product Name].allmembers on rows
+from [Sales 1]
+where [Time Dim 1].[Calendar Year]
+
+SELECT [Measures].[Qty] on columns
+	  ,[Product Dim 1].[Product Name].allmembers on rows
+from [Sales 1]
+where [Time Dim 1].[Calendar Year].[2007]
